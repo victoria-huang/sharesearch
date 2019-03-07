@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  group: one
+  journal: one
+  primary_id: 1
+  corresponding_id: 1
+  abstract: MyText
+  file: MyString
+
+two:
+  title: MyString
+  group: two
+  journal: two
+  primary_id: 1
+  corresponding_id: 1
+  abstract: MyText
+  file: MyString

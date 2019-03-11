@@ -15,7 +15,7 @@ class User < ApplicationRecord
     validates :username, uniqueness: true
 
     def accepted_connections
-        connections = self.connector_relationships.select { |c| c.accepted } 
+        connections = self.connector_relationships.select { |c| c.accepted }
         connections.map { |c| c.connected }
     end
 

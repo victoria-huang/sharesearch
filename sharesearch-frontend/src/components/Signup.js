@@ -56,6 +56,7 @@ class Signup extends Component {
             })
             .then(r => r.json())
             .then(data => {
+                console.log(data)
                 localStorage.setItem('token', data.jwt)
                 this.props.history.push('/profile')
             })
@@ -148,7 +149,7 @@ class Signup extends Component {
                     value={ this.state.edLevel }
                     onChange={ this.handleChange }
                 >
-                    <option defaultValue="" disabled>Please select...</option>
+                    <option defaultValue="">Please select...</option>
                     <option value="hs">High School</option>
                     <option value="associate">Associate's</option>
                     <option value="bachelor">Bachelor's</option>

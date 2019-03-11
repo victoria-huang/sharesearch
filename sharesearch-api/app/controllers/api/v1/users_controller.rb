@@ -6,10 +6,11 @@ class Api::V1::UsersController < ApplicationController
     end
 
     def create
-        byebug
-        @user = User.create(user_params)
-
+        @user = User.create(user_params.except(:specialties))
+        
         if @user.valid?
+            selected_specialties = user_params[:specialties].map{ |id| Specialty.find(id) }
+            @user.update(specialties: selected_specialties)
             @token = encode_token(user_id: @user.id)
             render json: { user: UserSerializer.new(@user), jwt: @token }, status: :created
         else

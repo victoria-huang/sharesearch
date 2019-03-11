@@ -5,7 +5,7 @@ Rails.application.routes.draw do
       # resources :user_groups
       # resources :groups
       # resources :user_specialties
-      # resources :specialties
+      resources :specialties, only: [:index]
       resources :users, only: [:create]
       # resources :reviews
       # resources :journals

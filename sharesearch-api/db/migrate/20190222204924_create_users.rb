@@ -10,6 +10,7 @@ class CreateUsers < ActiveRecord::Migration[5.2]
       t.string :degree
       t.string :position
       t.string :institution
+      t.string :ed_level
 
       t.timestamps
     end

@@ -64,7 +64,8 @@ ActiveRecord::Schema.define(version: 2019_02_26_205002) do
     t.integer "primary_id"
     t.integer "corresponding_id"
     t.text "abstract"
-    t.string "file"
+    t.boolean "is_complete"
+    t.string "final_draft_file"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["group_id"], name: "index_studies_on_group_id"
@@ -99,6 +100,7 @@ ActiveRecord::Schema.define(version: 2019_02_26_205002) do
     t.string "degree"
     t.string "position"
     t.string "institution"
+    t.string "ed_level"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

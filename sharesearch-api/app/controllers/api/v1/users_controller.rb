@@ -6,6 +6,7 @@ class Api::V1::UsersController < ApplicationController
     end
 
     def create
+        byebug
         @user = User.create(user_params)
 
         if @user.valid?
@@ -28,7 +29,9 @@ class Api::V1::UsersController < ApplicationController
             :bio, 
             :degree,
             :position,
-            :institution
+            :institution,
+            :ed_level,
+            specialties: []
         )
     end
 end

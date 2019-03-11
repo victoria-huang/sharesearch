@@ -7,7 +7,8 @@ class CreateStudies < ActiveRecord::Migration[5.2]
       t.integer :primary_id
       t.integer :corresponding_id
       t.text :abstract
-      t.string :file
+      t.boolean :is_complete
+      t.string :final_draft_file
 
       t.timestamps
     end

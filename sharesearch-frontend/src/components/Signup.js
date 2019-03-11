@@ -56,7 +56,6 @@ class Signup extends Component {
             })
             .then(r => r.json())
             .then(data => {
-                console.log(data)
                 localStorage.setItem('token', data.jwt)
                 this.props.history.push('/profile')
             })

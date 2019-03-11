@@ -9,7 +9,6 @@ const withAuth = (ComponentToWrap) => {
         }
 
         render() {
-            console.log(this.props)
             return (
                 <>
                 { localStorage.getItem('token') && <ComponentToWrap { ...this.props } /> }

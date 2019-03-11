@@ -1,4 +1,4 @@
-import { SET_CURRENT_USER } from '../constants/ActionTypes'
+import { SET_CURRENT_USER, LOGOUT } from '../constants/ActionTypes'
 
 const initialState = {
     currentUser: null
@@ -11,6 +11,8 @@ export default (state = initialState, action) => {
                 ...state,
                 currentUser: action.payload
             }
+        case LOGOUT:
+            return initialState
         default:
             return state
     }

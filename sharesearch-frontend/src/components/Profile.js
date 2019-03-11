@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { setCurrentUser } from '../actions'
+import NavBar from './NavBar'
 
 class Profile extends Component {
 
@@ -16,7 +17,10 @@ class Profile extends Component {
 
     render() {
         return (
+            <>
+            <NavBar />
             <div>Hi</div>
+            </>
         )
     }
 }

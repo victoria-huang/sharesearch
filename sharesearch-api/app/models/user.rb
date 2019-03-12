@@ -16,11 +16,30 @@ class User < ApplicationRecord
 
     def accepted_connections
         connections = self.connector_relationships.select { |c| c.accepted }
-        connections.map { |c| c.connected }
+        connections.map { |c| c.connected.format_connection }
     end
 
     def pending_connections
         connections = self.connector_relationships.select { |c| !c.accepted }
-        connections.map { |c| c.connected }
+        connections.map { |c| c.connected.format_connection }
+    end
+
+    def format_connection
+        {
+            id: self.id,
+            username: self.username,
+            first_name: self.first_name,
+            last_name: self.last_name,
+            email: self.email
+        }
+    end
+
+    def all_studies 
+        self.groups.map { |g| g.studies }.flatten
+    end
+
+    def solo_studies 
+        solo_group = self.groups.find { |g| g.name === "#{self.username}-solo" }
+        solo_group ? solo_group.studies : []
     end
 end

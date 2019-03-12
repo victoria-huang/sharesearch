@@ -12,7 +12,7 @@ const NavBar = (props) => {
  
     return (
         <>
-            <button onClick={ handleClick }>Logout</button>
+        <button onClick={ handleClick }>Logout</button>
         </>
     )
 }

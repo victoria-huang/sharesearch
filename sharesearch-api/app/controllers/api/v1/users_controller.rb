@@ -1,5 +1,10 @@
 class Api::V1::UsersController < ApplicationController
-    skip_before_action :authorized, only: [:create]
+    skip_before_action :authorized, only: %i[index create]
+
+    def index 
+        @users = User.all
+        render json: @users, status: 200
+    end
 
     def profile 
         render json: UserSerializer.new(current_user), status: :accepted
@@ -9,7 +14,9 @@ class Api::V1::UsersController < ApplicationController
         @user = User.create(user_params.except(:specialties))
         
         if @user.valid?
-            user_params[:specialties].each { |sId| UserSpecialty.create(specialty_id: sId.to_i, user_id: @user.id) }
+            user_params[:specialties].each { |sId| UserSpecialty.create(specialty_id: sId.to_i, user: @user) }
+            @solo_group = Group.create(name: "#{@user.name}-solo")
+            UserGroup.create(user: @user, group: @solo_group)
             # selected_specialties = user_params[:specialties].map{ |id| Specialty.find(id) }
             # @user.update(specialties: selected_specialties)
             @token = encode_token(user_id: @user.id)

@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import './App.css'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { HashRouter as Router, Route, Switch } from 'react-router-dom'
 import Welcome from './components/Welcome'
 import Login from './components/Login'
 import Signup from './components/Signup'
 import Profile from './components/Profile'
+import UserSearchResults from './components/UserSearchResults'
 import withAuth from './hoc/withAuth';
 import withAuthSuccess from './hoc/withAuthSuccess';
 
@@ -21,6 +22,7 @@ class App extends Component {
           <Route exact path='/' render={ (props) => <WelcomeWithAuthSuccess { ...props } /> } />
           <Route path='/login' render={ (props) => <LoginWithAuthSuccess {...props} /> } />
           <Route path='/signup' render={ (props) => <SignupWithAuthSuccess {...props} /> } />
+          <Route path='/search-users' render={ (props) => <UserSearchResults {...props} /> } />
           <Route path='/profile' render={ (props) => <ProfileWithAuth {...props} /> } />
         </Switch>
       </Router>

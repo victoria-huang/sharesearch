@@ -18,7 +18,7 @@ ActiveRecord::Schema.define(version: 2019_02_26_205002) do
   create_table "connections", force: :cascade do |t|
     t.integer "connected_id"
     t.integer "connector_id"
-    t.boolean "accepted"
+    t.boolean "accepted", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["connected_id", "connector_id"], name: "index_connections_on_connected_id_and_connector_id", unique: true

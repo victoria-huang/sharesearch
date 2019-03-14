@@ -15,7 +15,7 @@ class Api::V1::UsersController < ApplicationController
         
         if @user.valid?
             user_params[:specialties].each { |sId| UserSpecialty.create(specialty_id: sId.to_i, user: @user) }
-            @solo_group = Group.create(name: "#{@user.name}-solo")
+            @solo_group = Group.create(name: "#{@user.username}-solo")
             UserGroup.create(user: @user, group: @solo_group)
             # selected_specialties = user_params[:specialties].map{ |id| Specialty.find(id) }
             # @user.update(specialties: selected_specialties)

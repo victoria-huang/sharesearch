@@ -3,7 +3,7 @@ class CreateConnections < ActiveRecord::Migration[5.2]
     create_table :connections do |t|
       t.integer :connected_id
       t.integer :connector_id
-      t.boolean :accepted
+      t.boolean :accepted, default: false
 
       t.timestamps
     end

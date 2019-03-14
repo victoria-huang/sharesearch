@@ -1,2 +1,5 @@
+export const GET_ALL_USERS = 'GET_ALL_USERS'
+export const SET_USER_SEARCH = 'SET_USER_SEARCH'
+export const CLEAR_USER_SEARCH = 'CLEAR_USER_SEARCH'
 export const SET_CURRENT_USER = 'SET_CURRENT_USER'
 export const LOGOUT = 'LOGOUT'

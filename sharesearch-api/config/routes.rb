@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do 
-      # resources :connections
+      resources :connections, only: %i[create]
       # resources :user_groups
       # resources :groups
       # resources :user_specialties

@@ -14,13 +14,32 @@ class User < ApplicationRecord
 
     validates :username, uniqueness: true
 
-    def accepted_connections
-        connections = self.connector_relationships.select { |c| c.accepted }
+    # all accepted connections
+    def all_accepted_connections
+        connections = accepted_requests.concat(accepted_connections)
+    end
+
+    # requests from other
+    def pending_requests 
+        connections = self.connected_relationships.select { |c| !c.accepted }
+        connections.map { |c| c.connector.format_connection }
+    end
+
+    # my accepted requests
+    def accepted_requests 
+        connections = self.connected_relationships.select { |c| c.accepted }
+        connections.map { |c| c.connector.format_connection }
+    end
+
+    # my pending requests
+    def pending_connections
+        connections = self.connector_relationships.select { |c| !c.accepted }
         connections.map { |c| c.connected.format_connection }
     end
 
-    def pending_connections
-        connections = self.connector_relationships.select { |c| !c.accepted }
+    # accepted requests from others
+    def accepted_connections 
+        connections = self.connector_relationships.select { |c| c.accepted }
         connections.map { |c| c.connected.format_connection }
     end
 

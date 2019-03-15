@@ -10,7 +10,7 @@ class UserSearchResults extends Component {
     }
 
     filterUsers = () => this.props.users.filter( u => `${u.first_name} ${u.last_name}` === this.props.search )
-
+    // also control so that you can't see yourself
     renderUsers = () => this.filterUsers().map( u => <UserCard key={ v4() } { ...u } />)
 
     render() {

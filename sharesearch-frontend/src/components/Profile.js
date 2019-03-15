@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { setCurrentUser } from '../actions'
 import NavBar from './NavBar'
+import UserSearch from './UserSearch'
 import v4 from 'uuid'
 
 class Profile extends Component {
@@ -45,7 +46,8 @@ class Profile extends Component {
 
                 <h3>Pending Connections</h3>
                     <ul>{ this.renderConnections('pending') }</ul>
-            
+                
+                <UserSearch />
             </div>
             :
             <div>Loading...</div>

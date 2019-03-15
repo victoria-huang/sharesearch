@@ -1,26 +1,40 @@
 import React from 'react'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
-//NOTE: need to add action to request connection
-
-const handleAddConnection = (userId, connectionId) => {
-    const body = {
-        connector_id: userId,
-        connected_id: connectionId
-    }
-
-    fetch('http://localhost:3000/api/v1/connections', {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('token')}`
-        },
-        body: JSON.stringify(body)
-    })
-}
+import { requestConnection } from '../actions'
 
 const UserCard = (props) => {
+    const handleAddConnection = (connection) => {
+        props.requestConnection(connection)
+
+        const body = {
+            connector_id: props.currentUser.id,
+            connected_id: connection.id
+        }
+    
+        fetch('http://localhost:3000/api/v1/connections', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            },
+            body: JSON.stringify(body)
+        })
+    }
+
+    const renderRequestText = () => {
+        if (props.acceptedConnections.find( c => c.id === props.id)) {
+            return <strong>Connected</strong>
+        } else if (props.pendingConnections.find( c => c.id === props.id)) {
+            return <strong>Request Sent</strong>
+        } else if (props.pendingRequests.find( c => c.id === props.id)) {
+            return <strong>Awaiting your response</strong>
+        }
+
+        return <button onClick={ () => handleAddConnection(props) }>Request Connection</button>
+    }
+
     return (
         <>
         { props.first_name } { props.last_name }
@@ -29,10 +43,7 @@ const UserCard = (props) => {
             <button>
                 View Profile
             </button>
-            
-            <button onClick={ () => handleAddConnection(props.currentUser.id, props.id ) }>
-                Request Connection
-            </button>
+            { renderRequestText() }
             </>
             :
             <button onClick={ () => props.history.push('/login') }>Login to view full profile!</button>
@@ -43,8 +54,17 @@ const UserCard = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        currentUser: state.user.currentUser
+        currentUser: state.user.currentUser,
+        acceptedConnections: state.connection.acceptedConnections,
+        pendingConnections: state.connection.pendingConnections,
+        pendingRequests: state.connection.pendingRequests
     }
 }
 
-export default connect(mapStateToProps)(withRouter(UserCard))
+const mapDispatchToProps = (dispatch) => {
+    return {
+        requestConnection: (connection) => dispatch(requestConnection(connection))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(UserCard))

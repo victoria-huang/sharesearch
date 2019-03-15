@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { setCurrentUser } from '../actions'
+import { setCurrentUser, setConnections, acceptConnection, rejectConnection } from '../actions'
 import NavBar from './NavBar'
 import UserSearch from './UserSearch'
 import v4 from 'uuid'
@@ -14,12 +14,23 @@ class Profile extends Component {
             }
         })
         .then(r => r.json())
-        .then(user => this.props.setCurrentUser(user))
+        .then(user => {
+            const connections = {
+                allAcceptedConnections: user.all_accepted_connections,
+                pendingConnections: user.pending_connections,
+                pendingRequests: user.pending_requests
+            }
+
+            this.props.setCurrentUser(user)
+            this.props.setConnections(connections)
+        })
     }
 
-    handleAccept = (id) => {
+    handleAccept = (connection) => {
+        this.props.acceptConnection(connection)
+
         const body = {
-            connector_id: id,
+            connector_id: connection.id,
             connected_id: this.props.currentUser.id
         }
 
@@ -34,9 +45,11 @@ class Profile extends Component {
         })
     }
 
-    handleReject = (id) => {
+    handleReject = (connection) => {
+        this.props.rejectConnection(connection)
+
         const body = {
-            connector_id: id,
+            connector_id: connection.id,
             connected_id: this.props.currentUser.id
         }
 
@@ -56,15 +69,15 @@ class Profile extends Component {
         return this.props.currentUser.groups.map( g => <li key={ v4() }>{ g.name === `${username}-solo` ? 'My Solo Group' : g.name }</li>)
     }
 
-    renderConnections = () => this.props.currentUser.all_accepted_connections.map( c => <li key={ v4() }>{ c.username }</li> )
+    renderConnections = () => this.props.acceptedConections.map( c => <li key={ v4() }>{ c.username }</li> )
 
-    renderPendingConnections = () => this.props.currentUser.pending_connections.map( c => <li key={ v4() }>{ c.username }</li> )
+    renderPendingConnections = () => this.props.pendingConnections.map( c => <li key={ v4() }>{ c.username }</li> )
 
-    renderPendingRequests = () => this.props.currentUser.pending_requests.map( c => 
+    renderPendingRequests = () => this.props.pendingRequests.map( c => 
         <li key={ v4() }>
             { c.username }
-            <button onClick={ () => this.handleAccept(c.id) }>Accept</button>
-            <button onClick={ () => this.handleReject(c.id) }>Reject</button>
+            <button onClick={ () => this.handleAccept(c) }>Accept</button>
+            <button onClick={ () => this.handleReject(c) }>Reject</button>
         </li> 
     )
 
@@ -101,13 +114,19 @@ class Profile extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        currentUser: state.user.currentUser
+        currentUser: state.user.currentUser,
+        acceptedConections: state.connection.acceptedConnections,
+        pendingConnections: state.connection.pendingConnections,
+        pendingRequests: state.connection.pendingRequests
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        setCurrentUser: (user) => dispatch(setCurrentUser(user))
+        setCurrentUser: (user) => dispatch(setCurrentUser(user)),
+        setConnections: (connections) => dispatch(setConnections(connections)),
+        acceptConnection: (connection) => dispatch(acceptConnection(connection)),
+        rejectConnection: (connection) => dispatch(rejectConnection(connection))
     }
 }
 

@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux'
 import user from './user'
+import connection from './connection'
 
 const rootReducer = combineReducers({
-    user
+    user,
+    connection
 })
 
 export default rootReducer

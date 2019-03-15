@@ -1,5 +1,7 @@
 import * as types from '../constants/ActionTypes'
 
+/**** user ****/
+
 export const getAllUsers = (users) => {
     return {
         type: types.GET_ALL_USERS,
@@ -32,3 +34,34 @@ export const logout = () => {
         type: types.LOGOUT
     }
 }
+
+/**** connection ****/
+
+export const setConnections = (connections) => {
+    return {
+        type: types.SET_CONNECTIONS,
+        payload: connections
+    }
+}
+
+export const requestConnection = (connection) => {
+    return {
+        type: types.REQUEST_CONNECTION,
+        payload: connection
+    }
+}
+
+export const acceptConnection = (connection) => {
+    return {
+        type: types.ACCEPT_CONNECTION,
+        payload: connection
+    }
+}
+
+export const rejectConnection = (connection) => {
+    return {
+        type: types.REJECT_CONNECTION,
+        payload: connection
+    }
+}
+

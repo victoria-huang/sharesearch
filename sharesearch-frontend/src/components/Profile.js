@@ -17,18 +17,56 @@ class Profile extends Component {
         .then(user => this.props.setCurrentUser(user))
     }
 
+    handleAccept = (id) => {
+        const body = {
+            connector_id: id,
+            connected_id: this.props.currentUser.id
+        }
+
+        fetch('http://localhost:3000/api/v1/accept_connection', {
+            method: 'PATCH',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            },
+            body: JSON.stringify(body)
+        })
+    }
+
+    handleReject = (id) => {
+        const body = {
+            connector_id: id,
+            connected_id: this.props.currentUser.id
+        }
+
+        fetch('http://localhost:3000/api/v1/reject_connection', {
+            method: 'DELETE',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            },
+            body: JSON.stringify(body)
+        })
+    }
+
     renderGroups = () => {
         const username = this.props.currentUser.username
         return this.props.currentUser.groups.map( g => <li key={ v4() }>{ g.name === `${username}-solo` ? 'My Solo Group' : g.name }</li>)
     }
 
-    renderConnections = (type) => {
-        if (type === 'accepted') {
-            return this.props.currentUser.accepted_connections.map( c => <li key={ v4() }>{ c.username }</li> )
-        }
+    renderConnections = () => this.props.currentUser.all_accepted_connections.map( c => <li key={ v4() }>{ c.username }</li> )
 
-        return this.props.currentUser.pending_connections.map( c => <li key={ v4() }>{ c.username }</li> )
-    }
+    renderPendingConnections = () => this.props.currentUser.pending_connections.map( c => <li key={ v4() }>{ c.username }</li> )
+
+    renderPendingRequests = () => this.props.currentUser.pending_requests.map( c => 
+        <li key={ v4() }>
+            { c.username }
+            <button onClick={ () => this.handleAccept(c.id) }>Accept</button>
+            <button onClick={ () => this.handleReject(c.id) }>Reject</button>
+        </li> 
+    )
 
     render() {
         return (
@@ -42,10 +80,13 @@ class Profile extends Component {
                     <ul>{ this.renderGroups() }</ul>
 
                 <h3>My Connections</h3>
-                    <ul>{ this.renderConnections('accepted') }</ul>
+                    <ul>{ this.renderConnections() }</ul>
 
-                <h3>Pending Connections</h3>
-                    <ul>{ this.renderConnections('pending') }</ul>
+                <h3>Pending Connection Requests Awaiting Their Response</h3>
+                    <ul>{ this.renderPendingConnections() }</ul>
+
+                <h3>Pending Requests from Others Awaiting Your Response</h3>
+                    <ul>{ this.renderPendingRequests() }</ul>
                 
                 <UserSearch />
             </div>

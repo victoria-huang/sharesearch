@@ -13,6 +13,9 @@ Rails.application.routes.draw do
 
       post '/login', to: 'auth#create'
       get '/profile', to: 'users#profile'
+
+      patch '/accept_connection', to: 'connections#accept'
+      delete '/reject_connection', to: 'connections#reject'
     end
   end
 

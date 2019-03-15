@@ -24,11 +24,11 @@ const UserCard = (props) => {
     }
 
     const renderRequestText = () => {
-        if (props.acceptedConnections.find( c => c.id === props.id)) {
+        if ( props.acceptedConnections.find( c => c.id === props.id) ) {
             return <strong>Connected</strong>
-        } else if (props.pendingConnections.find( c => c.id === props.id)) {
+        } else if ( props.pendingConnections.find( c => c.id === props.id) ) {
             return <strong>Request Sent</strong>
-        } else if (props.pendingRequests.find( c => c.id === props.id)) {
+        } else if ( props.pendingRequests.find( c => c.id === props.id) ) {
             return <strong>Awaiting your response</strong>
         }
 
@@ -38,7 +38,8 @@ const UserCard = (props) => {
     return (
         <>
         { props.first_name } { props.last_name }
-        { localStorage.getItem('token') ? 
+        { 
+            localStorage.getItem('token') ? 
             <>
             <button>
                 View Profile

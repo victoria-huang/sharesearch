@@ -9,8 +9,18 @@ class UserSearchResults extends Component {
         this.props.clearUserSearch()
     }
 
-    filterUsers = () => this.props.users.filter( u => `${u.first_name} ${u.last_name}` === this.props.search )
-    // also control so that you can't see yourself
+    filterUsers = () => {
+        return this.props.users.filter( u => {
+            const nameMatch = (`${u.first_name} ${u.last_name}` === this.props.search)
+
+            if (localStorage.getItem('token')) {
+                return nameMatch && u.id !== this.props.currentUser.id
+            }
+
+            return nameMatch
+        } )
+    }
+
     renderUsers = () => this.filterUsers().map( u => <UserCard key={ v4() } { ...u } />)
 
     render() {
@@ -24,6 +34,7 @@ class UserSearchResults extends Component {
 
 const mapStateToProps = (state) => {
     return {
+        currentUser: state.user.currentUser,
         users: state.user.users,
         search: state.user.search
     }

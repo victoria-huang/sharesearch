@@ -111,7 +111,6 @@ class Profile extends Component {
     }
 }
 
-
 const mapStateToProps = (state) => {
     return {
         currentUser: state.user.currentUser,

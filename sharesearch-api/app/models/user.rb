@@ -6,6 +6,7 @@ class User < ApplicationRecord
     has_many :user_specialties
     has_many :specialties, through: :user_specialties
     has_many :reviews
+    has_and_belongs_to_many :conversations
 
     has_many :connected_relationships, class_name: 'Connection', foreign_key: 'connected_id', dependent: :destroy
     has_many :connector_relationships, class_name: 'Connection', foreign_key: 'connector_id', dependent: :destroy

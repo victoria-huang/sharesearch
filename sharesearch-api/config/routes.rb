@@ -10,6 +10,8 @@ Rails.application.routes.draw do
       # resources :reviews
       # resources :journals
       # resources :studies
+      # resources :conversations
+      # resources :messages
 
       post '/login', to: 'auth#create'
       get '/profile', to: 'users#profile'

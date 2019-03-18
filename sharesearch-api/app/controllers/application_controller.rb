@@ -4,7 +4,6 @@ class ApplicationController < ActionController::API
     AUTH_KEY = Rails.application.credentials.dig(:auth_key)
 
     def encode_token(payload)
-        #TODO: hide secret key
         JWT.encode(payload, AUTH_KEY)
     end
 

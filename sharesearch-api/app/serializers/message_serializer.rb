@@ -1,4 +1,4 @@
 class MessageSerializer < ActiveModel::Serializer
-  attributes :id, :content, :sender_id
+  attributes :id, :content, :sender, :created_at
   has_one :conversation
 end

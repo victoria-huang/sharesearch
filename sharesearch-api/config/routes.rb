@@ -10,8 +10,8 @@ Rails.application.routes.draw do
       # resources :reviews
       # resources :journals
       # resources :studies
-      # resources :conversations
-      # resources :messages
+      resources :conversations, only: %i[index create]
+      resources :messages, only: %i[create]
 
       post '/login', to: 'auth#create'
       get '/profile', to: 'users#profile'

@@ -5,10 +5,12 @@ import Welcome from './components/Welcome'
 import Login from './components/Login'
 import Signup from './components/Signup'
 import Profile from './components/Profile'
+import ConversationList from './components/ConversationList'
 import UserSearchResults from './components/UserSearchResults'
 import withAuth from './hoc/withAuth';
 import withAuthSuccess from './hoc/withAuthSuccess';
 
+const ConversationListWithAuth = withAuth(ConversationList)
 const ProfileWithAuth = withAuth(Profile)
 const WelcomeWithAuthSuccess = withAuthSuccess(Welcome)
 const LoginWithAuthSuccess = withAuthSuccess(Login)
@@ -24,6 +26,7 @@ class App extends Component {
           <Route path='/signup' render={ (props) => <SignupWithAuthSuccess {...props} /> } />
           <Route path='/search-users' render={ (props) => <UserSearchResults {...props} /> } />
           <Route path='/profile' render={ (props) => <ProfileWithAuth {...props} /> } />
+          <Route path='/conversations' render={ (props) => <ConversationListWithAuth {...props} /> } />
         </Switch>
       </Router>
     );
